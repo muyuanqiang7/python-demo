@@ -2,7 +2,10 @@
 # encoding:utf-8
 # filename:module.py
 import sys
-import fibo
+
+import fibonacci
+
+import using__name
 
 
 def command_print():
@@ -13,6 +16,7 @@ def command_print():
 
 
 def print_func(param):
-    fibo.fib(10)
-    print(fibo.fib2(10))
+    fibonacci.fib(10)
+    using__name.print_name()
+    print(fibonacci.fib2(10))
     print("Hello, ", param)

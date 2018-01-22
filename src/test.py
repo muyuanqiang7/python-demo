@@ -3,4 +3,4 @@
 import module
 
 module.print_func("module")
-module.command_print()
+# module.command_print()
