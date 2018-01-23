@@ -7,6 +7,11 @@ from datetime import date
 import zlib
 from timeit import Timer
 
+import os
+
+# os
+print(os.getcwd())
+
 now = date.today()
 print(now)
 
