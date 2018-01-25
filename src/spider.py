@@ -53,5 +53,5 @@ def get_qiubai_joke():
 
 
 if __name__ == '__main__':
-    get_pengfu_joke()
+    # get_pengfu_joke()
     get_qiubai_joke()
