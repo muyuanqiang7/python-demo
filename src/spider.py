@@ -1,5 +1,10 @@
 #!/usr/local/bin/python3
 # encoding:utf-8
+import queue
+import threading
+
+import time
+import urllib
 
 from bs4 import BeautifulSoup
 from pip._vendor import requests
@@ -52,6 +57,50 @@ def get_qiubai_joke():
     return
 
 
+# if __name__ == '__main__':
+#     get_pengfu_joke()
+# get_qiubai_joke()
+
+baseUrl = 'http://www.pythontab.com/html/pythonjichu/'
+urlQueue = queue.Queue()
+for i in range(2, 10):
+    url = baseUrl + str(i) + '.html'
+    urlQueue.put(url)
+    # print(url)
+
+
+def fetchUrl(url_queue):
+    while True:
+        try:
+            # 不阻塞的读取队列数据
+            request_url = url_queue.get_nowait()
+            i = url_queue.qsize()
+        except Exception as e:
+            break
+        print('Current Thread Name %s, Url: %s ' % (threading.currentThread().name, request_url))
+        try:
+            response = urllib.request.urlopen(request_url)
+            response_code = response.getcode()
+        except Exception as e:
+            continue
+        if response_code == 200:
+            # 抓取内容的数据处理可以放到这里
+            # 为了突出效果， 设置延时
+            time.sleep(1)
+
+
 if __name__ == '__main__':
-    # get_pengfu_joke()
-    get_qiubai_joke()
+    startTime = time.time()
+    threads = []
+    # 可以调节线程数， 进而控制抓取速度
+    threadNum = 4
+    for i in range(0, threadNum):
+        t = threading.Thread(target=fetchUrl, args=(urlQueue,))
+        threads.append(t)
+    for t in threads:
+        t.start()
+    for t in threads:
+        # 多线程多join的情况下，依次执行各线程的join方法, 这样可以确保主线程最后退出， 且各个线程间没有阻塞
+        t.join()
+    endTime = time.time()
+    print('Done, Time cost: %s ' % (endTime - startTime))
