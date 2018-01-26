@@ -34,6 +34,13 @@ echo "b / a : $val"
 val=`expr $b % $a`
 echo "b % a : $val"
 # 关系运算符
+#EQ 就是 EQUAL等于
+# NE 就是 NOT EQUAL不等于
+# GT 就是 GREATER THAN大于　
+# LT 就是 LESS THAN小于
+# GE 就是 GREATER THAN OR EQUAL 大于等于
+# LE 就是 LESS THAN OR EQUAL 小于等于
+
 if [ $a == $b ]
 then
    echo "a 等于 b"
@@ -160,8 +167,20 @@ fi
 # -s file	检测文件是否为空（文件大小是否大于0），不为空返回 true。	[ -s $file ] 返回 true。
 # -e file	检测文件（包括目录）是否存在，如果是，则返回 true。	[ -e $file ] 返回 true。
 file="/Users/muyuanqiang/PycharmProjects/python-demo/shell/execute.sh"
+if [ -e $file ]; then
+    echo "文件为存在"
+else
+    echo "文件不存在"
+fi
+
 if [ -d $file ]; then
     echo "文件为目录"
 else
     echo "文件不是目录"
+fi
+
+if [ -r $file ]; then
+    echo "文件可读"
+else
+    echo "文件不可读"
 fi
